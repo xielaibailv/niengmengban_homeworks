@@ -49,7 +49,7 @@ for i in num:
     result.append(b)
 result[0],result[3] = result[3],result[0]
 result[1],result[2] = result[2],result[1]
-
+# result[0],result[1],result[2],result[3] = result[3],result[2],result[1],result[0]
 x1 = result[0]*1000
 x2 = result[1]*100
 x3 = result[2]*10
