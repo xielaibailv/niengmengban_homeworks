@@ -1,0 +1,144 @@
+#父类：电商平台
+
+# 平台名称 特征 feature 销售模式 创始人
+#功能：登录 支付方式 计算收银的功能
+
+#登录功能：
+#1. 用户名统一规定为 huahua 密码统一规定为 123456
+#2.如果输入用户名和密码正确 就提示登录成功，返回True(布尔值类型）
+#3.如果用户名和密码不匹配或者不正确，那么就显示登录失败，用户名或密码不正确，返回False(布尔值类型）
+
+#支付方式：
+# 有3种 一种是微信支付 一种是支付宝支付 一种是银联支付
+
+#一个优惠的功能：随机发送不同额度金额的优惠金额（金额范围在10-50之间）
+
+
+#写2个子类：京东类 和 淘宝类
+
+#京东类 用户购买了东西 只能选择微信支付 银联支付 不支持支付宝支付
+
+
+# 一个结算的功能：结算的时候根据用户选择 结算的时候根据用户输入用户信息以及金额以及支付方式作出如下的反馈
+#先判断用户是否登录成功 登录成功后提示用户名 然后用户输入金额
+#1）微信支付 就可以享受优惠
+#2）选择银联支付就不享受优惠
+#3） 选择支付宝提示不能支付，请重新选择支付
+
+
+#淘宝类 用户购买了东西 只能选择支付宝支付 银联支付 不支持微信支付
+
+# 一个结算的功能：结算的时候根据用户输入的金额以及支付方式作出如下的反馈
+#先判断用户是否登录成功 登录成功后提示用户名 然后用户输入金额
+#1）支付宝支付 就可以享受优惠
+#2）选择银联支付就不享受优惠
+#3） 选择微信提示不能支付，请重新选择支付
+import random
+
+#父类，电商平台
+class P2P:
+    def __init__(self,name,creater):
+        self.name = name  #平台名称
+        self.feature = 'p2p'  #平台特征
+        self.creater = creater  #平台创始人
+        self.username = 'huahua'
+        self.password = '123456'
+
+    #登录功能
+    def login(self):
+        username = input('请输入用户名：')
+        if username == self.username:
+            password = input('请输入密码：')
+            if password == self.password:
+                print('登录成功！欢迎来到{}'.format(self.name))
+                return True
+            else:
+                print('密码错误！')
+                return False
+        else:
+            print('用户名错误！')
+            return False
+
+    #支付方式选择
+    def mode_payment(self):
+        while True:
+            payment = input('请选择支付方式（微信；支付宝；银联）：')
+            if payment == '微信':
+                return payment
+            elif payment == '支付宝':
+                return payment
+            elif payment == '银联':
+                return payment
+            else:
+                print('选择错误！重新选择！')
+
+    #优惠
+    def discounts(self):
+        self.num = random.randint(10,50)
+        return self.num
+
+
+#子类1：淘宝
+class Taobao(P2P):
+    login_result = P2P('淘宝','马云').login()
+    if login_result:
+        print('huahua您好！')
+        try:
+            account = float(input('请输入你购买的金额：'))
+        except TypeError as e:
+            print('请输入数字！')
+        while True:
+            payment = P2P('淘宝','马云').mode_payment()
+            if payment == '支付宝':
+                num = P2P('淘宝','马云').discounts()
+                print('你可以享受优惠！优惠是{}'.format(num))
+                result = account - num
+                print('您最终需要支付的金额为：{}'.format(result))
+                break
+            elif payment == '银联':
+                print('您本次不享受优惠，谢谢！')
+                print('您最终需要支付的金额为：{}'.format(account))
+                break
+            else:
+                print('微信提示不能支付，请重新选择支付')
+
+    else:
+        print('登录失败！')
+
+#子类2：京东
+class Jingdong(P2P):
+    global account
+    login_result = P2P('京东','刘强东').login()
+    if login_result:
+        print('huahua您好！')
+        try:
+            account = float(input('请输入你购买的金额：'))
+        except TypeError as e:
+            print('请输入数字！')
+        while True:
+            payment = P2P('京东','刘强东').mode_payment()
+            if payment == '微信':
+                num = P2P('京东','刘强东').discounts()
+                print('你可以享受优惠！优惠是{}'.format(num))
+                result = account - num
+                print('您最终需要支付的金额为：{}'.format(result))
+                break
+            elif payment == '银联':
+                print('您本次不享受优惠，谢谢！')
+                print('您最终需要支付的金额为：{}'.format(account))
+                break
+            else:
+                print('支付宝提示不能支付，请重新选择支付')
+
+    else:
+        print('登录失败！')
+
+
+def test():
+    Taobao('淘宝','马云')
+    Jingdong('京东','刘强东')
+
+
+
+if __name__ == '__main__':
+    test()
