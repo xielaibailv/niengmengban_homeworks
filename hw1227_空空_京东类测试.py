@@ -15,10 +15,24 @@ class TestMethod(unittest.TestCase):
             print('断言失败，原因：%s' %e)
             raise e
 
+    # 登录成功
+    def test_login_pass(self, j):
+        login_result = j.login('huahua', '123456')
+        try:
+            self.assertTrue(login_result)
+        except Exception as e:
+            print('断言失败，原因：%s' % e)
+            raise e
+
     #使用支付宝进行支付，结果失败
     def test_payment_zhifubao(self,j):
         # login_result = j.login('huahua', '123456')
         # payment = j.mode_payment('2')
-        j.count(1000,'2')
+        result = j.count(1000,'2')
+        try:
+            self.assertTrue(login_result)
+        except Exception as e:
+            print('断言失败，原因：%s' % e)
+            raise e
 
 
