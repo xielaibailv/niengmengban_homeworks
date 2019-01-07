@@ -41,7 +41,7 @@ class DoExcel:
             case.title = sheet.cell(i, 2).value  # 存用例的标题
             case.a = sheet.cell(i, 3).value  # 存用例的参数 a
             case.b = sheet.cell(i, 4).value  # 存用例的参数 b
-            case.excepted = sheet.cell(i, 5).value  # 存用例的期望值
+            case.expected = sheet.cell(i, 5).value  # 存用例的期望值
             cases.append(case)
         return cases
 
