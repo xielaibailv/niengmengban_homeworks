@@ -14,10 +14,9 @@ sub_cases = DoExcel('测试数学类的数据.xlsx', 'data_sub',button).read_dat
 @ddt  # 装饰测试类
 class TestMathMethod(unittest.TestCase):  # TestCase是unittest里专门写用例的地方
     """测试数学类的测试用例类"""
-    # def setUp(self):
-        # 创建一个对象，将调用DoExcel类调用写在这里
-        # self.add = DoExcel('测试数学类的数据.xlsx', 'data_add')
-        # self.sub = DoExcel('测试数学类的数据.xlsx', 'data_sub')
+    def setUp(self):
+        self.add = DoExcel('测试数学类的数据.xlsx', 'data_add',button)
+        self.sub = DoExcel('测试数学类的数据.xlsx', 'data_sub',button)
 
     def tearDown(self):
         print('用例执行结束')
@@ -57,7 +56,7 @@ class TestMathMethod(unittest.TestCase):  # TestCase是unittest里专门写用�
             self.sub.write_data(row=case.id + 1, column=7, value=test_result)
 
 
-# if __name__ == '__main__':
-#     unittest.main()
+if __name__ == '__main__':
+    unittest.main()
 
 

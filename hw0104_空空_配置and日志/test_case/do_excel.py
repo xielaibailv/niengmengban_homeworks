@@ -35,9 +35,10 @@ class DoExcel:
                 case.b = sheet.cell(i, 4).value  # 存用例的参数 b
                 case.expected = sheet.cell(i, 5).value  # 存用例的期望值
                 cases.append(case)
-        elif self.button == '1':
+            return cases
+        elif type(eval(self.button)) == int:  # 假如配置文件是单个数字，则从头执行到该行的用例
             self.button = int(self.button)
-            for i in range(2, 3):  # 从第二行开始读取
+            for i in range(2, self.button+2):  # 从第二行开始读取
                 case = Cases()  # 每一行数据是一个用例，存在Cases()这个对象里面
                 case.id = sheet.cell(i, 1).value  # 存用例的序号
                 case.title = sheet.cell(i, 2).value  # 存用例的标题
@@ -45,9 +46,10 @@ class DoExcel:
                 case.b = sheet.cell(i, 4).value  # 存用例的参数 b
                 case.expected = sheet.cell(i, 5).value  # 存用例的期望值
                 cases.append(case)
-        elif self.button == '2':
-            self.button = int(self.button)
-            for i in range(2, 4):  # 从第二行开始读取
+            return cases
+        elif type(eval(self.button)) == list:   # 如果列表，[a,b]则从a行执行到b行
+            self.button = eval(self.button)
+            for i in range(self.button[0]+1, self.button[1]+2):
                 case = Cases()  # 每一行数据是一个用例，存在Cases()这个对象里面
                 case.id = sheet.cell(i, 1).value  # 存用例的序号
                 case.title = sheet.cell(i, 2).value  # 存用例的标题
