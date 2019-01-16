@@ -1,0 +1,16 @@
+test_001_1___001____002____003____004__ (hw0102_¿Õ¿Õ_ddt.test_ddt.TestMethod)
+Built-in immutable sequence. ... ERROR
+
+======================================================================
+ERROR: test_001_1___001____002____003____004__ (hw0102_¿Õ¿Õ_ddt.test_ddt.TestMethod)
+Built-in immutable sequence.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Python\Python37\Lib\site-packages\ddt.py", line 145, in wrapper
+    return func(self, *args, **kwargs)
+TypeError: test_001() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
