@@ -1,4 +1,5 @@
-from hw0104_空空_配置and日志.test_case.test_math_method import TestMathMethod  # 导入测试用例的模块，获取测试用例
+# 导入测试用例的模块，获取测试用例
+from hw0104_空空_配置and日志.test_case.test_math_method import TestMathMethod
 import HTMLTestRunnerNew  # 导入HTML测试报告模块，生成HTML格式的测试报告
 import unittest
 

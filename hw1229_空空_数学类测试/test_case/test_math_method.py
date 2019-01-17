@@ -4,17 +4,20 @@ import unittest
 from ddt import ddt, data
 
 # 从两个sheet里读取值，分别传给下面的两个测试方法
-add_cases = DoExcel('测试数学类的数据.xlsx', 'data_add').read_data()
-sub_cases = DoExcel('测试数学类的数据.xlsx', 'data_sub').read_data()
+add = DoExcel('测试数学类的数据.xlsx', 'data_add')
+sub = DoExcel('测试数学类的数据.xlsx', 'data_sub')
+add_cases = add.read_data()
+sub_cases = sub.read_data()
 
 
 @ddt  # 装饰测试类
 class TestMathMethod(unittest.TestCase):  # TestCase是unittest里专门写用例的地方
     """测试数学类的测试用例类"""
-    def setUp(self):
+    # def setUp(self):
         # 创建一个对象，将调用DoExcel类调用写在这里
-        self.add = DoExcel('测试数学类的数据.xlsx', 'data_add')
-        self.sub = DoExcel('测试数学类的数据.xlsx', 'data_sub')
+        # 写在这里的话，每执行一次用例就要初始化一个对象，觉得不是很好，应该写在外面
+        # self.add = DoExcel('测试数学类的数据.xlsx', 'data_add')
+        # self.sub = DoExcel('测试数学类的数据.xlsx', 'data_sub')
 
     def tearDown(self):
         print('用例执行结束')
@@ -33,8 +36,8 @@ class TestMathMethod(unittest.TestCase):  # TestCase是unittest里专门写用�
             raise e
         finally:
             print('a + b 的值 = {}'.format(result))
-            self.add.write_data(row=case.id + 1, column= 6, value=result)
-            self.add.write_data(row=case.id + 1, column=7, value=test_result)
+            add.write_data(row=case.id + 1, column= 6, value=result)
+            add.write_data(row=case.id + 1, column=7, value=test_result)
 
     # 测试减法
     @data(*sub_cases)
@@ -50,8 +53,8 @@ class TestMathMethod(unittest.TestCase):  # TestCase是unittest里专门写用�
             raise e
         finally:
             print('a - b 的值 = {}'.format(result))
-            self.sub.write_data(row=case.id + 1, column= 6, value=result)
-            self.sub.write_data(row=case.id + 1, column=7, value=test_result)
+            sub.write_data(row=case.id + 1, column= 6, value=result)
+            sub.write_data(row=case.id + 1, column=7, value=test_result)
 
 
 if __name__ == '__main__':
