@@ -7,7 +7,7 @@ class Cases:
         self.title = None
         self.a = None
         self.b = None
-        self.excepted = None
+        self.expected = None
 
 
 
