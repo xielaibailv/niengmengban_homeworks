@@ -33,7 +33,7 @@ class DoExcel:
         #     test_data.append(per_data)
         # return test_data
 
-        # 理由类与对象的思维来写read_data
+        # 利用类与对象的思维来写read_data
         cases = []   # 所有用例存进一个列表
         for i in range(2, sheet.max_row + 1):  # 从第二行开始读取
             case = Cases()   # 每一行数据是一个用例，存在Cases()这个对象里面

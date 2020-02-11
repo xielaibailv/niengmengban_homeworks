@@ -16,7 +16,10 @@ class MathMethod:
         return res
 
 
+
+
 if __name__ == "__main__":
     r = MathMethod(2, 3)
     print(r.add())
     print(r.sub())
+    print(r.a_b_s())

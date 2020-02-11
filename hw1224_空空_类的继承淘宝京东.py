@@ -153,9 +153,7 @@ class P2P:
         self.password = '123456'
 
     # 登录功能
-    def login(self):
-        username = input('请输入用户名：')
-        password = input('请输入密码：')
+    def login(self, username, password):
         if username == self.username and password == self.password:
             print('登录成功！{},欢迎来到{}。'.format(username, self.name))
             return True
@@ -180,7 +178,7 @@ class P2P:
         return num
 
 
-# # 子类1：淘宝
+# 子类1：淘宝
 # class TaoBao(P2P):
 #     username = input('请输入用户名：')
 #     password = input('请输入密码：')
@@ -221,8 +219,10 @@ class P2P:
 # 子类2：京东
 class JingDong(P2P):
     def count(self):
+        username = input('请输入用户名：')
+        password = input('请输入密码：')
         j = P2P('京东','自营', '刘强东')
-        login_result = j.login()
+        login_result = j.login(username, password)
         while login_result:
             try:
                 account = float(input('请输入你购买的金额：'))
@@ -251,7 +251,8 @@ class JingDong(P2P):
 
 if __name__ == '__main__':
     # login_result = TaoBao(P2P)
-    # account =TaoBao(P2P).pay_account(login_result)
+    # account =login_result.pay_account(login_result)
     # TaoBao(P2P).account_result(account)
-
-    JingDong(P2P)
+    #
+    jj = JingDong(P2P)
+    # d = jj.count()

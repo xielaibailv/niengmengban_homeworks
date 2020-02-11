@@ -167,6 +167,7 @@ class Gesture:
 
         return co_ges
 
+    # 对战
     def fight(self,dogfall=0,computer_win = 0,role_win = 0):
         print('欢迎进入猜拳游戏！')
         #获取角色
@@ -206,6 +207,69 @@ class Gesture:
 
         print('角色赢{}局 ;电脑赢{}局;平局{}次 ,游戏结束。'.format(role_win,computer_win,dogfall))
 
+# 重新写了一次，简化了某些判断，更通用化
+class PlayGame:
+    def __init__(self):
+        self.gesture = {'1' : "剪刀", '2': '石头', '3': '布'}
+
+    def choose_role(self):
+        role_list = {"1":"曹操","2":"张飞","3":"刘备"}
+        while True:
+            choose = input('请输入数字选择角色：1 曹操 2张飞 3 刘备')
+            if choose in role_list.keys():
+                role = role_list[choose]
+                print('您的角色是：{}'.format(role_list[choose]))
+                break
+            else:
+                print('输入有误，请重新输入')
+                continue
+        return role
+
+    def role_play(self,role):
+        while True:
+            choose = input('{}请出拳：（1：剪刀； 2：石头； 3：布）'.format(role))
+            if choose in self.gesture.keys():
+                self.role_fist = self.gesture[choose]
+                print('{}出拳：{}'.format(role, self.role_fist))
+                break
+            else:
+                print('输入错误，请重新出拳')
+                continue
+        return int(choose)
+
+    def computer_play(self):
+        com_temp = random.randint(1,3)
+        computer_fist = self.gesture[str(com_temp)]
+        print('电脑出拳：{}'.format(computer_fist))
+        return com_temp
+
+    def play(self):
+        dogfall = 0
+        com_win = 0
+        role_win = 0
+        print('wolcome to play fist game!')
+        role = self.choose_role()
+        while True:
+            role_fist = self.role_play(role)
+            computer_fist = self.computer_play()
+            if (computer_fist - role_fist) in [-2,1]:
+                print('电脑获胜！')
+                com_win += 1
+            elif (computer_fist - role_fist) in [-1,2]:
+                print('{}获胜！'.format(role))
+                role_win += 1
+            elif computer_fist == role_fist:
+                print('平局！')
+                dogfall += 1
+            choose = input('是否继续游戏？y继续，其他任意键退出')
+            if choose == 'y':
+                continue
+            else:
+                print('游戏结束。电脑获胜{}，玩家获胜{}，平局{}'.format(com_win, role_win, dogfall))
+                break
+
+
 
 if __name__ == '__main__':
     Gesture().fight()
+    game = PlayGame().play()
