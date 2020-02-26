@@ -35,8 +35,10 @@
 # 3） 选择微信提示不能支付，请重新选择支付
 import random
 
-
 # 父类，电商平台
+#这个写的不好，设计不太合理
+
+
 class P2P:
     def __init__(self, name=None, feature=None, creater=None):
         self.name = name  # 平台名称
@@ -104,3 +106,8 @@ class JingDong(P2P):
                     return False
             break
 
+
+
+if __name__ == "__main__":
+    j = JingDong(name="京东", feature="电商", creater="刘强东")
+    j.count(500, "1")

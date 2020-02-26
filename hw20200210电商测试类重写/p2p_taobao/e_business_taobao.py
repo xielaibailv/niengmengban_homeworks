@@ -34,11 +34,14 @@
 # 2）选择银联支付就不享受优惠
 # 3） 选择微信提示不能支付，请重新选择支付
 import random
+
+
 class E_Business:
     def __init__(self, platform_name):
         self.platform_name = platform_name
         self.username = 'admin'
         self.password = '123456'
+
     # login
     def login(self, username, password):
         if username == self.username and password == self.password:
@@ -49,8 +52,9 @@ class E_Business:
             return False
 
     # 支付方式选择
-    def choose_pay(self):
-        pay_way = {1:'微信',2:'支付宝',3:'银联'}
+    @staticmethod
+    def choose_pay():
+        # pay_way = {1:'微信',2:'支付宝',3:'银联'}
         while True:
             try:
                 choose = int(input("请选择支付方式：1:'微信',2:'支付宝',3:'银联'"))
@@ -63,24 +67,20 @@ class E_Business:
                 print("请按照提示输入!")
                 continue
 
-
-
     # 计算优惠
-    def discounts(self):
+    @staticmethod
+    def discounts():
         account = random.randint(1,50)
         return account
 
 
 class TaoBao(E_Business):
-    def login_tb(self):
-        username = input('请输入用户名：')
-        password = input('请输入密码：')
-        login_result = self.login(username, password)
-        return login_result
 
+    # 之前在子类里重写了登录类，后来发现没必要，可以直接调用父类的一样可以实现功能
     # 收银
-    def count(self):
-        login_result = self.login_tb()
+    def count(self, username, password):
+        login_result = self.login(username, password)
+
         while login_result:
             try:
                 account = float(input("请输入您本次的消费金额："))
@@ -107,5 +107,5 @@ class TaoBao(E_Business):
 
 if __name__ == "__main__":
     tb = TaoBao("淘宝")
-    tb.count()
+    tb.count("admin","123456")
 
