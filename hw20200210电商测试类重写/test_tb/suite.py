@@ -8,6 +8,6 @@ loader = unittest.TestLoader()
 suite.addTest(loader.loadTestsFromTestCase(TestMethod))
 
 with open('../test_report/TestReport.html','wb') as f:
-    runner = HTMLTestRunnerNew.HTMLTestRunner(f,2,title='电商测试报告',description='20200225',tester='yoyo')
+    runner = HTMLTestRunnerNew.HTMLTestRunner(f,2,title='电商测试报告',description='20200229',tester='yoyo')
     runner.run(suite)
 

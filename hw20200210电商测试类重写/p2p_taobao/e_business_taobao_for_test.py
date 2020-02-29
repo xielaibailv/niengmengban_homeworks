@@ -35,7 +35,7 @@
 # 3） 选择微信提示不能支付，请重新选择支付
 import random
 
-# 这个类单看功能是OK的，没什么问题，但里面有太多input了，接口里不应该出现这种方式
+
 class E_Business:
     def __init__(self, platform_name):
         self.platform_name = platform_name
@@ -53,59 +53,71 @@ class E_Business:
 
     # 支付方式选择
     @staticmethod
-    def choose_pay():
+    def choose_pay(pay_way):
         # pay_way = {1:'微信',2:'支付宝',3:'银联'}
-        while True:
             try:
-                choose = int(input("请选择支付方式：1:'微信',2:'支付宝',3:'银联'"))
+                pay_way = int(pay_way)
+                if pay_way in (1,2,3):
+                    return pay_way
+                else:
+                    print("请选择正确的支付方式。")
             except ValueError:
-                print("请按照提示输入!")
-                continue
-            if choose in (1, 2, 3):
-                return choose
-            else:
-                print("请按照提示输入!")
-                continue
+                print("输入错误，只允许输入数字")
+
 
     # 计算优惠
     @staticmethod
     def discounts():
-        account = random.randint(1,50)
+        account = random.randint(1, 50)
         return account
 
 
 class TaoBao(E_Business):
 
-    # 之前在子类里重写了登录类，后来发现没必要，可以直接调用父类的一样可以实现功能
     # 收银
-    def count(self, username, password):
+    # 正常的程序，应该不用考虑需要重复输入的情况，应该是重新调用接口，所以不需要写那么多while循环
+    # 也应该尽量不要在方法中出现需要用户输入的代码？应该由函数作为参数传进来
+    def login_tb(self, username, password):
         login_result = self.login(username, password)
+        return login_result
 
-        while login_result:
+    def count(self, login_result, account, pay_way):
+        # account:消费金额
+        # pay_way: 支付方式
+        if login_result:
             try:
-                account = float(input("请输入您本次的消费金额："))
-                break
+                account = float(account)
             except ValueError:
                 print('请输入数字')
-                continue
-
-        while True:
-            choose = self.choose_pay()
+                return False
+            # 调用选择支付方式的接口，获取支付方式
+            choose = self.choose_pay(pay_way)
             if choose == 1:
                 print("不好意思，本店不支持微信支付")
-                continue
+                return False
             elif choose == 2:
+                # 选择支付宝，则进行随机金额的优惠
                 discount = self.discounts()
                 if discount < account:
-                     final_amount = float('% 0.2f' %(account - discount))
+                    final_amount = float('% 0.2f' %(account - discount))
+                else:
+                    # 如果优惠金额大于消费金额，则不优惠
+                    final_amount = float('% 0.2f' % account)
+                    discount = 0
                 print("恭喜你本次获得优惠{}，最终需要支付的金额为：{}".format(discount, final_amount))
-                break
+                return True
+            # 如果是银联支付，则无优惠
             elif choose == 3:
-                print("您本次需要支付的金额为：{}".format(account))
-                break
+                final_amount = float('% 0.2f' % account)
+                print("您本次需要支付的金额为：{}".format(final_amount))
+                return final_amount
+
 
 
 if __name__ == "__main__":
     tb = TaoBao("淘宝")
-    tb.count("admin","123456")
+    login = tb.login_tb("admin","123456")
+    money = tb.count(login,"200","1")
+    print(money)
+
 
